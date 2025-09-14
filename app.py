@@ -18,14 +18,35 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- Input Box ---
-email_text = st.text_area("✉️ Paste Email Text Here", height=200, placeholder="Type or paste email content...")
+# --- Input Box with Session State ---
+if "email_text" not in st.session_state:
+    st.session_state.email_text = ""
 
-# --- Prediction Button ---
-if st.button("🔍 Check Email"):
+email_text = st.text_area(
+    "✉️ Paste Email Text Here",
+    value=st.session_state.email_text,
+    height=200,
+    placeholder="Type or paste email content..."
+)
+
+# --- Buttons in Columns (Side by Side) ---
+col1, col2 = st.columns([1,1])
+with col1:
+    check_btn = st.button("🔍 Check Email")
+with col2:
+    clear_btn = st.button("🧹 Clear Text")
+
+# --- Clear Button Functionality ---
+if clear_btn:
+    st.session_state.email_text = ""  # Reset text
+    st.experimental_rerun()
+
+# --- Prediction Logic ---
+if check_btn:
     if email_text.strip() == "":
         st.warning("⚠️ Please enter some email text to check.")
     else:
+        st.session_state.email_text = email_text  # Keep text after check
         vectorized = tfidf.transform([email_text])
         prediction = model.predict(vectorized)[0]
 
@@ -40,4 +61,6 @@ st.markdown(
     "<p style='text-align: center; font-size: 14px; color: gray;'>Made with ❤️ using Streamlit | AI-Powered Email Classification</p>",
     unsafe_allow_html=True,
 )
+
+
 
