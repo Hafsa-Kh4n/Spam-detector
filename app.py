@@ -39,7 +39,7 @@ with col2:
 # --- Clear Button Functionality ---
 if clear_btn:
     st.session_state.email_text = ""  # Reset text
-    st.experimental_rerun()
+
 
 # --- Prediction Logic ---
 if check_btn:
@@ -61,6 +61,7 @@ st.markdown(
     "<p style='text-align: center; font-size: 14px; color: gray;'>Made with ❤️ using Streamlit | AI-Powered Email Classification</p>",
     unsafe_allow_html=True,
 )
+
 
 
 
