@@ -24,7 +24,7 @@ if "email_text" not in st.session_state:
 
 email_text = st.text_area(
     "✉️ Paste Email Text Here",
-    value=st.session_state.email_text,
+    value=st.session_state.email_text,  # This will now show empty after clearing
     height=200,
     placeholder="Type or paste email content..."
 )
@@ -61,6 +61,7 @@ st.markdown(
     "<p style='text-align: center; font-size: 14px; color: gray;'>Made with ❤️ using Streamlit | AI-Powered Email Classification</p>",
     unsafe_allow_html=True,
 )
+
 
 
 
