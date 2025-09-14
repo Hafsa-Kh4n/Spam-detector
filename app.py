@@ -14,10 +14,17 @@ if st.button("🔍 Check Email"):
     if email_text.strip() == "":
         st.warning("Please enter some email text.")
     else:
+        # Transform input
         vectorized = tfidf.transform([email_text])
-        prediction = model.predict(vectorized)[0]
-        
+
+        # ✅ Get spam probability
+        spam_prob = model.predict_proba(vectorized)[:, 1][0]
+
+        # ✅ Use custom threshold (0.6)
+        prediction = 1 if spam_prob >= 0.6 else 0
+
         if prediction == 1:
-            st.error("🚨 This email is classified as SPAM / harmful!")
+            st.error(f"🚨 This email is classified as SPAM / harmful! (Spam Probability: {spam_prob:.2f})")
         else:
-            st.success("✅ This email seems SAFE.")
+            st.success(f"✅ This email seems SAFE. (Spam Probability: {spam_prob:.2f})")
+
