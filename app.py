@@ -47,13 +47,20 @@ if check_btn:
         st.warning("⚠️ Please enter some email text to check.")
     else:
         st.session_state.email_text = email_text  # Keep text after check
-        vectorized = tfidf.transform([email_text])
-        prediction = model.predict(vectorized)[0]
+       vectorized = tfidf.transform([email_text])
+prediction = model.predict(vectorized)[0]
 
-        if prediction == 1:
-            st.error("🚨 **This email is classified as SPAM / harmful!**")
-        else:
-            st.success("✅ **This email seems SAFE. No malicious intent detected.**")
+# --- Post-processing rule for trusted senders ---
+trusted_senders = ["google", "gmail", "gemini", "microsoft", "github", "linkedin"]
+if any(word in email_text.lower() for word in trusted_senders):
+    prediction = 0  # Force mark as SAFE
+
+# --- Display result ---
+if prediction == 1:
+    st.error("🚨 **This email is classified as SPAM / harmful!**")
+else:
+    st.success("✅ **This email seems SAFE. No malicious intent detected.**")
+
 
 # --- Footer ---
 st.markdown("---")
@@ -61,6 +68,7 @@ st.markdown(
     "<p style='text-align: center; font-size: 14px; color: gray;'>Made with ❤️ using Streamlit | AI-Powered Email Classification</p>",
     unsafe_allow_html=True,
 )
+
 
 
 
