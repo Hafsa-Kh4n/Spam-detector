@@ -53,7 +53,7 @@ if check_btn:
         prediction = model.predict(vectorized)[0]
 
         # --- Post-processing rule for trusted senders ---
-        trusted_senders = ["google", "gmail", "gemini", "microsoft", "github", "linkedin"]
+        trusted_senders = ["google", "gmail", "gemini", "microsoft", "github", "linkedin","streamlit"]
         if any(word in email_text.lower() for word in trusted_senders):
             prediction = 0  # Force mark as SAFE
 
@@ -70,6 +70,7 @@ st.markdown(
     "<p style='text-align: center; font-size: 14px; color: gray;'>Made with ❤️ using Streamlit | AI-Powered Email Classification</p>",
     unsafe_allow_html=True,
 )
+
 
 
 
