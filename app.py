@@ -61,10 +61,10 @@ if check_btn:
       spam_prob = model.predict_proba(vectorized)[0][1]
 st.write(f"📊 **Spam Probability:** {spam_prob:.2%}")
 
-if spam_prob > 0.7:  # Less strict threshold
-    st.error("🚨 This email is **harmful!**")
-else:
-    st.success("✅ This email seems **SAFE**.")
+            if spam_prob > 0.7:  # Less strict threshold
+                st.error("🚨 This email is **harmful!**")
+            else:
+                  st.success("✅ This email seems **SAFE**.")
 
 
 # --- Footer ---
@@ -73,6 +73,7 @@ st.markdown(
     "<p style='text-align: center; font-size: 14px; color: gray;'>Made with ❤️ using Streamlit | AI-Powered Email Classification</p>",
     unsafe_allow_html=True,
 )
+
 
 
 
