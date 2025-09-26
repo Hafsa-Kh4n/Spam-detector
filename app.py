@@ -34,7 +34,7 @@ col1, col2 = st.columns([1,1])
 with col1:
     check_btn = st.button("🔍 Check Email")
 with col2:
-    clear_btn = st.button("🧹 Clear Text")
+    clear_btn = st.button("🧹 Clear Text (double click)")
 
 # --- Clear Button Functionality ---
 if clear_btn:
@@ -58,10 +58,13 @@ if check_btn:
             prediction = 0  # Force mark as SAFE
 
         # --- Display result ---
-        if prediction == 1:
-            st.error("🚨 **This email is classified as SPAM / harmful!**")
-        else:
-            st.success("✅ **This email seems SAFE. No malicious intent detected.**")
+      spam_prob = model.predict_proba(vectorized)[0][1]
+st.write(f"📊 **Spam Probability:** {spam_prob:.2%}")
+
+if spam_prob > 0.7:  # Less strict threshold
+    st.error("🚨 This email is **harmful!**")
+else:
+    st.success("✅ This email seems **SAFE**.")
 
 
 # --- Footer ---
@@ -70,6 +73,7 @@ st.markdown(
     "<p style='text-align: center; font-size: 14px; color: gray;'>Made with ❤️ using Streamlit | AI-Powered Email Classification</p>",
     unsafe_allow_html=True,
 )
+
 
 
 
